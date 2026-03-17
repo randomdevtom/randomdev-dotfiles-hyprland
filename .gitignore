@@ -1,0 +1,9 @@
+.config/mozilla/firefox/*/storage/
+.config/mozilla/firefox/*/cache2/
+.config/mozilla/firefox/*/crashes/
+.config/mozilla/firefox/*/datareporting/
+.config/mozilla/firefox/*/minidumps/
+.config/dconf/
+.config/yay/
+.config/session/
+.config/pulse/
