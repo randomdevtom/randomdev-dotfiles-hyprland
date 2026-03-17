@@ -90,8 +90,8 @@ yay -S --needed --noconfirm grimblast-git hyprlauncher wlogout sddm-astronaut-th
 
 # Copy config files
 echo "Copying configuration files..."
-cp -r .config/. ~/.config/
-cp .zshrc ~/
+cp -rf .config/. ~/
+cp -rf -.zshrc ~/
 [ -d ".themes" ] && cp -r .themes/. ~/.themes/
 [ -d "Pictures" ] && cp -r Pictures/. ~/Pictures/
 
