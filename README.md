@@ -57,16 +57,6 @@ cd randomdev-dotfiles-hyprland
 bash install.sh
 ```
 
-After the script finishes:
-
-1. Reboot your system
-2. Log into Hyprland via SDDM
-3. Run:
-```bash
-~/post-install.sh
-```
-to set up pywal colors and GTK theme
-
 ---
 
 ## ⌨️ Keybindings
