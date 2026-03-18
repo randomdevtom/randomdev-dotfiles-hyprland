@@ -251,7 +251,7 @@ sleep 2
 
 info "Setting wallpaper and generating pywal colors (light mode)..."
 swww img ~/Pictures/Wallpapers/wallpaper_animated.gif
-wal -i -i ~/Pictures/Wallpapers/wallpaper_animated.gif -n
+wal -i ~/Pictures/Wallpapers/wallpaper_animated.gif -n
 success "Pywal colors generated!"
 
 info "Building oomox GTK theme from pywal colors..."
