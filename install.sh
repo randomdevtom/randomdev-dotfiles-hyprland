@@ -126,7 +126,10 @@ sudo pacman -S --needed --noconfirm swww
 success "Wallpaper done!"
 
 info "Pywal..."
-sudo pacman -S --needed --noconfirm python-pywal python-pywalfox bc sassc
+sudo pacman -S --needed --noconfirm python-pywal bc sassc nwg-look
+yay -S --needed --noconfirm python-pywalfox 
+mkdir -p ~/.local/share/nwg-look
+touch ~/.local/share/nwg-look/gsettings
 success "Pywal done!"
 
 info "Shell..."
