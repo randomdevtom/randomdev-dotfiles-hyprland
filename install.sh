@@ -54,8 +54,8 @@ success "Config files copied!"
 
 info "Copying .zshrc..."
 cp -rf .zshrc ~/
+cp -rf .ohmy-zsh/. ~/.oh-my-zsh/
 success ".zshrc copied!"
-
 info "Copying themes..."
 [ -d ".themes" ] && cp -rf .themes/. ~/.themes/ && success "Themes copied!" || warning "No .themes folder found, skipping."
 
