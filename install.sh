@@ -6,7 +6,12 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 echo "Starting installation..."
 echo "I am a lazy guy :P"
-
+# Copy config files
+echo "Copying configuration files..."
+cp -r .config/. ~/
+cp -r -.zshrc ~/
+[ -d ".themes" ] && cp -r .themes/. ~/.themes/
+[ -d "Pictures" ] && cp -r Pictures/. ~/Pictures/
 # Update system
 sudo pacman -Syu --noconfirm
 
@@ -88,12 +93,7 @@ sudo pacman -S --needed --noconfirm sassc gtk-engine-murrine gtk-engines flatpak
 echo "Installing AUR packages..."
 yay -S --needed --noconfirm grimblast-git hyprlauncher wlogout sddm-astronaut-theme com.github.themix_project.Oomox python-pywal
 
-# Copy config files
-echo "Copying configuration files..."
-cp -rf .config/. ~/
-cp -rf -.zshrc ~/
-[ -d ".themes" ] && cp -r .themes/. ~/.themes/
-[ -d "Pictures" ] && cp -r Pictures/. ~/Pictures/
+
 
 # Set zsh as default shell
 echo "Setting zsh as default shell..."
