@@ -257,14 +257,7 @@ success "Pywal colors generated!"
 info "Building oomox GTK theme from pywal colors..."
 source ~/.cache/wal/colors.sh
 
-OOMOX_THEME_SCRIPT=$(find /var/lib/flatpak -name "change_color.sh" 2>/dev/null | grep theme_oomox | head -1)
-
-if [ -z "$OOMOX_THEME_SCRIPT" ]; then
-    error "Oomox change_color.sh not found! Is the flatpak installed?"
-    exit 1
-fi
-OOMOX_COLORS=$(mktemp)
-cat > "$OOMOX_COLORS" << COLORS
+gsettings set org.gnome.desktop.interface gtk-theme "oomox-colors-oomox-animated"
 NAME=pywal
 BG=${color0#\#}
 FG=${color15#\#}
