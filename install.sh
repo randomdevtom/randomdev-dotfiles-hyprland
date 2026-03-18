@@ -251,7 +251,7 @@ sleep 2
 
 info "Setting wallpaper and generating pywal colors (light mode)..."
 swww img ~/Pictures/Wallpapers/wallpaper_animated.gif
-wal -l -i ~/Pictures/Wallpapers/wallpaper_animated.gif -n
+wal -i -i ~/Pictures/Wallpapers/wallpaper_animated.gif -n
 success "Pywal colors generated!"
 
 info "Building oomox GTK theme from pywal colors..."
@@ -261,16 +261,19 @@ OOMOX_THEME_SCRIPT="/var/lib/flatpak/app/com.github.themix_project.Oomox/x86_64/
 
 OOMOX_COLORS=$(mktemp)
 cat > "$OOMOX_COLORS" << COLORS
-BG=${background#\#}
-FG=${foreground#\#}
+NAME=pywal
+BG=${color0#\#}
+FG=${color15#\#}
+MENU_BG=${color0#\#}
+MENU_FG=${color15#\#}
 SEL_BG=${color1#\#}
-SEL_FG=${foreground#\#}
+SEL_FG=${color15#\#}
+TXT_BG=${color0#\#}
+TXT_FG=${color15#\#}
 BTN_BG=${color2#\#}
-BTN_FG=${foreground#\#}
+BTN_FG=${color15#\#}
 HDR_BG=${color0#\#}
-HDR_FG=${foreground#\#}
-TXT_BG=${background#\#}
-TXT_FG=${foreground#\#}
+HDR_FG=${color15#\#}
 ROUNDNESS=4
 GRADIENT=0.0
 SPACING=3
@@ -278,9 +281,8 @@ COLORS
 
 "$OOMOX_THEME_SCRIPT" -o "pywal" "$OOMOX_COLORS"
 gsettings set org.gnome.desktop.interface gtk-theme "oomox-pywal"
-gsettings set org.gnome.desktop.interface color-scheme "prefer-light"
 rm "$OOMOX_COLORS"
-success "GTK light theme applied!"
+success "GTK dark theme applied!"
 
 success "Post-install done! You can delete ~/post-install.sh"
 EOF
