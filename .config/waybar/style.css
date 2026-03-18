@@ -1,0 +1,105 @@
+@import "/home/tom/.cache/wal/colors-waybar.css";
+
+/* Main Bar */
+window#waybar {
+    background: alpha(@background, 0.25);
+    color: @foreground;
+    border-radius: 20px;
+    margin: 8px 12px;
+    border: 1px solid alpha(@foreground, 0.06);
+}
+
+/* Internal containers */
+.modules-left,
+.modules-center,
+.modules-right {
+    background: alpha(@color0, 0.35);
+    margin: 5px 4px;
+    padding: 0 12px;
+    border-radius: 14px;
+    border: 1px solid alpha(@foreground, 0.05);
+}
+
+/* Workspaces */
+#workspaces {
+    padding: 0 2px;
+}
+
+#workspaces button {
+    padding: 2px 8px;
+    margin: 3px 2px;
+    color: alpha(@foreground, 0.35);
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    background: transparent;
+    min-width: 24px;
+}
+
+#workspaces button:hover {
+    color: alpha(@foreground, 0.7);
+    background: alpha(@foreground, 0.07);
+}
+
+#workspaces button.occupied {
+    color: alpha(@foreground, 0.75);
+}
+
+#workspaces button.active {
+    background: alpha(@color1, 0.85);
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 8px alpha(@color1, 0.4);
+}
+
+#workspaces button span {
+    color: inherit;
+}
+
+/* All right-side modules */
+#clock,
+#battery,
+#cpu,
+#memory,
+#temperature,
+#network,
+#pulseaudio,
+#idle-inhibitor,
+#language {
+    padding: 0 8px;
+    color: @foreground;
+}
+
+/* Subtle accent on clock */
+#clock {
+    color: @color2;
+    font-weight: 500;
+}
+
+/* Battery states */
+#battery.warning {
+    color: @color3;
+}
+
+#battery.critical {
+    color: @color1;
+    animation: none;
+}
+
+/* Network */
+#network.disconnected {
+    color: @color1;
+}
+
+/* Arch button */
+#custom-arch {
+    color: @color4;
+    padding: 0 6px 0 2px;
+    font-size: 16px;
+}
+
+/* Window title */
+#window {
+    color: alpha(@foreground, 0.6);
+    font-style: italic;
+    font-size: 13px;
+}
