@@ -227,7 +227,7 @@ sudo tee /etc/sddm.conf << 'SDDMEOF'
 [Theme]
 Current=sddm-astronaut-theme
 SDDMEOF
-
+sudo sed -i 's/ConfigFiles=Themes\/.*/ConfigFiles=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
 sudo mkdir -p /etc/sddm.conf.d/
 sudo tee /etc/sddm.conf.d/virtualkbd.conf << 'KBDEOF'
 [General]
