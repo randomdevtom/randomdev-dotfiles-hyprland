@@ -234,12 +234,12 @@ sudo tee /etc/sddm.conf.d/virtualkbd.conf << 'KBDEOF'
 InputMethod=qtvirtualkeyboard
 KBDEOF
 
-sudo sed -i 's/ConfigFile=Themes\/astronaut.conf/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
-
 info "Enabling SDDM..."
 sudo systemctl enable sddm
 success "SDDM setup done!"
-
+info "Applying SDDM theme..."
+sudo sed -i 's/ConfigFile=Themes\/.*/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
+success "SDDM theme applied!"
 # ── Post install script ───────────────────────────────────────
 section "Creating Post-Install Script"
 
