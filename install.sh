@@ -30,7 +30,9 @@ BANNER
 echo -e "${NC}"
 echo -e "${YELLOW}${BOLD}  I am a lazy guy :P${NC}\n"
 sleep 1
-
+echo -e "${RED}${BOLD}  WARNING: This script will overwrite existing config files!${NC}"
+echo -e "${YELLOW}  Make sure to backup any configs you want to keep.${NC}\n"
+read -p "  Press Enter to continue or Ctrl+C to cancel..."
 # Ask for password once and keep sudo alive
 info "Requesting sudo access..."
 sudo -v
