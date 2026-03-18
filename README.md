@@ -97,8 +97,7 @@ Colors are generated automatically from the wallpaper using **pywal**. The GTK t
 To change the wallpaper and regenerate colors:
 
 ```bash
-wal -i ~/Pictures/Wallpapers/your-wallpaper.jpg
-swww img ~/Pictures/Wallpapers/your-wallpaper.jpg
+./wallpaper.sh 'Path-to-your-Wallpaper'
 ```
 
 ---
