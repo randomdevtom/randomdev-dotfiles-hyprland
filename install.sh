@@ -125,7 +125,7 @@ sudo pacman -S --needed --noconfirm swww
 success "Wallpaper done!"
 
 info "Pywal..."
-sudo pacman -S --needed --noconfirm python-pywal python-pywalfox
+sudo pacman -S --needed --noconfirm python-pywal python-pywalfox bc sassc
 success "Pywal done!"
 
 info "Shell..."
