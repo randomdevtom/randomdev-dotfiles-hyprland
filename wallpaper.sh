@@ -101,9 +101,6 @@ nwg-look -a
 # Restart waybar
 killall waybar && waybar &disown
 
-# Update pywalfox
-pywalfox update
-
 # Reload hyprland
 hyprctl reload
 
