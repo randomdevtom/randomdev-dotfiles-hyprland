@@ -218,13 +218,17 @@ sudo pacman -S --needed --noconfirm sddm qt6-svg qt6-virtualkeyboard qt6-multime
 # Copy fonts
 sudo cp -r /usr/share/sddm/themes/sddm-astronaut-theme/Fonts/* /usr/share/fonts/
 
-# Set theme
-echo "[Theme]
-Current=sddm-astronaut-theme" | sudo tee /etc/sddm.conf
+## Set theme
+sudo tee /etc/sddm.conf << 'EOF'
+[Theme]
+Current=sddm-astronaut-theme
+EOF
 
 # Set virtual keyboard
-echo "[General]
-InputMethod=qtvirtualkeyboard" | sudo tee /etc/sddm.conf.d/virtualkbd.conf
+sudo tee /etc/sddm.conf.d/virtualkbd.conf << 'EOF'
+[General]
+InputMethod=qtvirtualkeyboard
+EOF
 
 # Set hyprland_kath variant
 sudo sed -i 's/ConfigFile=Themes\/astronaut.conf/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
