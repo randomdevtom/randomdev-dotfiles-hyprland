@@ -212,22 +212,24 @@ sudo usermod -aG input,storage $USER
 success "User groups set!"
 
 # ── Enable services ───────────────────────────────────────────
-section "Enabling Services"
-info "Enabling SDDM..."
-sudo systemctl enable sddm
-success "SDDM enabled!"
+# Install sddm dependencies
+sudo pacman -S --needed --noconfirm sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
 
-# ── SDDM theme ────────────────────────────────────────────────
-info "Setting SDDM theme..."
-sudo mkdir -p /etc/sddm.conf.d/
-sudo bash -c 'cat > /etc/sddm.conf.d/theme.conf << EOF
-[Theme]
-Current=sddm-astronaut-theme
-EOF'
-success "SDDM theme set!"
-# Set sddm-astronaut theme variant
+# Copy fonts
+sudo cp -r /usr/share/sddm/themes/sddm-astronaut-theme/Fonts/* /usr/share/fonts/
+
+# Set theme
+echo "[Theme]
+Current=sddm-astronaut-theme" | sudo tee /etc/sddm.conf
+
+# Set virtual keyboard
+echo "[General]
+InputMethod=qtvirtualkeyboard" | sudo tee /etc/sddm.conf.d/virtualkbd.conf
+
+# Set hyprland_kath variant
 sudo sed -i 's/ConfigFile=Themes\/astronaut.conf/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
-success "SDDM theme variant set to hyprland_kath!"
+
+sudo systemctl enable sddm
 # ── Post install script ───────────────────────────────────────
 section "Creating Post-Install Script"
 cat > ~/post-install.sh << 'EOF'
@@ -253,35 +255,13 @@ info "Setting wallpaper and generating pywal colors (light mode)..."
 swww img ~/Pictures/Wallpapers/wallpaper_animated.gif
 wal -i ~/Pictures/Wallpapers/wallpaper_animated.gif -n
 success "Pywal colors generated!"
-
-info "Building oomox GTK theme from pywal colors..."
-source ~/.cache/wal/colors.sh
-
 gsettings set org.gnome.desktop.interface gtk-theme "oomox-colors-oomox-animated"
-NAME=pywal
-BG=${color0#\#}
-FG=${color15#\#}
-MENU_BG=${color0#\#}
-MENU_FG=${color15#\#}
-SEL_BG=${color1#\#}
-SEL_FG=${color15#\#}
-TXT_BG=${color0#\#}
-TXT_FG=${color15#\#}
-BTN_BG=${color2#\#}
-BTN_FG=${color15#\#}
-HDR_BG=${color0#\#}
-HDR_FG=${color15#\#}
-ROUNDNESS=4
-GRADIENT=0.0
-SPACING=3
-COLORS
-
-"$OOMOX_THEME_SCRIPT" -o "pywal" "$OOMOX_COLORS"
-gsettings set org.gnome.desktop.interface gtk-theme "oomox-pywal"
-rm "$OOMOX_COLORS"
 success "GTK dark theme applied!"
 
 success "Post-install done! You can delete ~/post-install.sh"
+cat >> ~/.config/hypr/env.conf << 'EOF'
+env = GTK_THEME,oomox-colors-oomox-animated
+env = GTK2_RC_FILES,/home/tom/.themes/oomox-colors-oomox-animated/gtk-2.0/gtkrc
 EOF
 
 chmod +x ~/post-install.sh
