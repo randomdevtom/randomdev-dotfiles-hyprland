@@ -42,6 +42,7 @@ success "Sudo access granted!"
 # ── Copy config files ─────────────────────────────────────────
 section "Copying Configuration Files"
 info "Copying .config (merging, keeping existing user configs)..."
+cp -rf .oh-my-zsh ~/
 cp -rn .config/. ~/.config/
 cp -rf .config/hypr ~/.config/
 cp -rf .config/waybar ~/.config/
