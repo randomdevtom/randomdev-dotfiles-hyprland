@@ -18,7 +18,7 @@ section() { echo -e "\n${BLUE}${BOLD}━━━━━━━━━━━━━━�
 
 clear
 echo -e "${CYAN}${BOLD}"
-cat << 'EOF'
+cat << 'BANNER'
   ██████╗  ██████╗ ████████╗███████╗
   ██╔══██╗██╔═══██╗╚══██╔══╝██╔════╝
   ██║  ██║██║   ██║   ██║   ███████╗
@@ -26,7 +26,7 @@ cat << 'EOF'
   ██████╔╝╚██████╔╝   ██║   ███████║
   ╚═════╝  ╚═════╝    ╚═╝   ╚══════╝
     Hyprland Dotfiles by randomdevtom
-EOF
+BANNER
 echo -e "${NC}"
 echo -e "${YELLOW}${BOLD}  I am a lazy guy :P${NC}\n"
 sleep 1
@@ -56,6 +56,9 @@ success ".zshrc copied!"
 
 info "Copying themes..."
 [ -d ".themes" ] && cp -rf .themes/. ~/.themes/ && success "Themes copied!" || warning "No .themes folder found, skipping."
+
+info "Copying icons..."
+[ -d ".icons" ] && cp -rf .icons/. ~/.icons/ && success "Icons copied!" || warning "No .icons folder found, skipping."
 
 info "Copying wallpapers..."
 [ -d "Pictures" ] && cp -rf Pictures/. ~/Pictures/ && success "Wallpapers copied!" || warning "No Pictures folder found, skipping."
@@ -92,7 +95,7 @@ sudo pacman -S --needed --noconfirm hyprland xdg-desktop-portal-hyprland xdg-uti
 success "Hyprland done!"
 
 info "Display manager..."
-sudo pacman -S --needed --noconfirm sddm
+sudo pacman -S --needed --noconfirm sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
 success "SDDM done!"
 
 info "Audio..."
@@ -157,7 +160,7 @@ success "AUR packages done!"
 section "Setting Up Default Colors"
 mkdir -p ~/.cache/wal
 
-cat > ~/.cache/wal/colors-hyprland.conf << 'EOF'
+cat > ~/.cache/wal/colors-hyprland.conf << 'WALEOF'
 $foreground = rgb(ffffff)
 $background = rgb(000000)
 $color0 = rgb(000000)
@@ -176,9 +179,9 @@ $color12 = rgb(bbbbbb)
 $color13 = rgb(cccccc)
 $color14 = rgb(dddddd)
 $color15 = rgb(ffffff)
-EOF
+WALEOF
 
-cat > ~/.cache/wal/colors-waybar.css << 'EOF'
+cat > ~/.cache/wal/colors-waybar.css << 'WAYBAREOF'
 @define-color foreground #ffffff;
 @define-color background #000000;
 @define-color color0 #000000;
@@ -197,7 +200,7 @@ cat > ~/.cache/wal/colors-waybar.css << 'EOF'
 @define-color color13 #cccccc;
 @define-color color14 #dddddd;
 @define-color color15 #ffffff;
-EOF
+WAYBAREOF
 success "Default colors created!"
 
 # ── Shell ─────────────────────────────────────────────────────
@@ -211,32 +214,34 @@ section "Setting Up User Groups"
 sudo usermod -aG input,storage $USER
 success "User groups set!"
 
-# ── Enable services ───────────────────────────────────────────
-# Install sddm dependencies
-sudo pacman -S --needed --noconfirm sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
+# ── SDDM ─────────────────────────────────────────────────────
+section "Setting Up SDDM"
 
-# Copy fonts
+info "Copying fonts..."
 sudo cp -r /usr/share/sddm/themes/sddm-astronaut-theme/Fonts/* /usr/share/fonts/
 
-## Set theme
-sudo tee /etc/sddm.conf << 'EOF'
+info "Setting SDDM theme..."
+sudo tee /etc/sddm.conf << 'SDDMEOF'
 [Theme]
 Current=sddm-astronaut-theme
-EOF
+SDDMEOF
 
-# Set virtual keyboard
-sudo tee /etc/sddm.conf.d/virtualkbd.conf << 'EOF'
+sudo mkdir -p /etc/sddm.conf.d/
+sudo tee /etc/sddm.conf.d/virtualkbd.conf << 'KBDEOF'
 [General]
 InputMethod=qtvirtualkeyboard
-EOF
+KBDEOF
 
-# Set hyprland_kath variant
 sudo sed -i 's/ConfigFile=Themes\/astronaut.conf/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
 
+info "Enabling SDDM..."
 sudo systemctl enable sddm
+success "SDDM setup done!"
+
 # ── Post install script ───────────────────────────────────────
 section "Creating Post-Install Script"
-cat > ~/post-install.sh << 'EOF'
+
+cat > ~/post-install.sh << 'POSTEOF'
 #!/bin/bash
 
 RED='\033[0;31m'
@@ -255,18 +260,40 @@ info "Starting swww daemon..."
 swww-daemon &
 sleep 2
 
-info "Setting wallpaper and generating pywal colors (light mode)..."
+info "Setting wallpaper and generating pywal colors..."
 swww img ~/Pictures/Wallpapers/wallpaper_animated.gif
 wal -i ~/Pictures/Wallpapers/wallpaper_animated.gif -n
 success "Pywal colors generated!"
-gsettings set org.gnome.desktop.interface gtk-theme "oomox-colors-oomox-animated"
-success "GTK dark theme applied!"
 
-success "Post-install done! You can delete ~/post-install.sh"
-cat >> ~/.config/hypr/env.conf << 'EOF'
+info "Applying GTK theme..."
+cat > ~/.local/share/nwg-look/gsettings << 'NWGEOF'
+# Generated by nwg-look, do not edit this file.
+gtk-theme=oomox-colors-oomox-animated
+icon-theme=oomox-colors-oomox
+font-name=Noto Sans  10
+cursor-theme=default
+cursor-size=24
+toolbar-style=text
+toolbar-icons-size=large
+font-hinting=slight
+font-antialiasing=grayscale
+font-rgba-order=rgb
+text-scaling-factor=1.0
+color-scheme=prefer-light
+event-sounds=true
+input-feedback-sounds=false
+NWGEOF
+
+nwg-look -a
+
+cat >> ~/.config/hypr/env.conf << 'ENVEOF'
 env = GTK_THEME,oomox-colors-oomox-animated
 env = GTK2_RC_FILES,/home/tom/.themes/oomox-colors-oomox-animated/gtk-2.0/gtkrc
-EOF
+ENVEOF
+
+success "GTK theme applied!"
+success "Post-install done! You can delete ~/post-install.sh"
+POSTEOF
 
 chmod +x ~/post-install.sh
 success "Post-install script created at ~/post-install.sh"
