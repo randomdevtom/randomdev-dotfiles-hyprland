@@ -245,30 +245,9 @@ info "Applying SDDM theme..."
 sudo sed -i 's/ConfigFile=Themes\/.*/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
 success "SDDM theme applied!"
 # ── Post install script ───────────────────────────────────────
-section "Creating Post-Install Script"
+section "Setting wallpaper"
 
-cat > ~/post-install.sh << 'POSTEOF'
-#!/bin/bash
-
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-CYAN='\033[0;36m'
-BOLD='\033[1m'
-NC='\033[0m'
-
-info()    { echo -e "${CYAN}${BOLD}[INFO]${NC} $1"; }
-success() { echo -e "${GREEN}${BOLD}[OK]${NC} $1"; }
-error()   { echo -e "${RED}${BOLD}[ERR]${NC} $1"; }
-
-echo -e "${CYAN}${BOLD}Running post-install setup...${NC}\n"
-
-info "Starting swww daemon..."
-swww-daemon &
-sleep 2
-
-info "Setting wallpaper and generating pywal colors..."
-
-./wallpaper.sh ~/Pictures/Wallpapers/wallpaper-animated.gif
+./wallpaper.sh ~/Pictures/Wallpapers/wallpaper_animated.gif 
 # ── Done ──────────────────────────────────────────────────────
 echo -e "\n${GREEN}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${GREEN}${BOLD}  Installation complete!${NC}"
