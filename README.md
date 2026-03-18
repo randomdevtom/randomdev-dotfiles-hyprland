@@ -18,7 +18,7 @@
 
 <div align="center">
 
-![screenshot](Pictures/Wallpapers/wallpaper-city.jpeg)
+![screenshot](preview.png)
 
 </div>
 
@@ -61,7 +61,11 @@ After the script finishes:
 
 1. Reboot your system
 2. Log into Hyprland via SDDM
-3. Run `~/post-install.sh` to set up pywal colors and GTK theme
+3. Run:
+```bash
+~/post-install.sh
+```
+to set up pywal colors and GTK theme
 
 ---
 
