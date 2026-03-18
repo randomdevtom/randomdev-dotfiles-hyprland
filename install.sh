@@ -1,127 +1,260 @@
 #!/bin/bash
 
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+NC='\033[0m'
+
+# UI helpers
+info()    { echo -e "${CYAN}${BOLD}[INFO]${NC} $1"; }
+success() { echo -e "${GREEN}${BOLD}[OK]${NC} $1"; }
+warning() { echo -e "${YELLOW}${BOLD}[WARN]${NC} $1"; }
+error()   { echo -e "${RED}${BOLD}[ERR]${NC} $1"; }
+section() { echo -e "\n${BLUE}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n${BOLD}  $1${NC}\n${BLUE}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"; }
+
+clear
+echo -e "${CYAN}${BOLD}"
+cat << 'EOF'
+  ██████╗  ██████╗ ████████╗███████╗
+  ██╔══██╗██╔═══██╗╚══██╔══╝██╔════╝
+  ██║  ██║██║   ██║   ██║   ███████╗
+  ██║  ██║██║   ██║   ██║   ╚════██║
+  ██████╔╝╚██████╔╝   ██║   ███████║
+  ╚═════╝  ╚═════╝    ╚═╝   ╚══════╝
+    Hyprland Dotfiles by randomdevtom
+EOF
+echo -e "${NC}"
+echo -e "${YELLOW}${BOLD}  I am a lazy guy :P${NC}\n"
+sleep 1
+
 # Ask for password once and keep sudo alive
+info "Requesting sudo access..."
 sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+success "Sudo access granted!"
 
-echo "Starting installation..."
-echo "I am a lazy guy :P"
-# Copy config files
-echo "Copying configuration files..."
-cp -rf .config/ ~/
+# ── Copy config files ─────────────────────────────────────────
+section "Copying Configuration Files"
+info "Copying .config (merging, keeping existing user configs)..."
+cp -rn .config/. ~/.config/
+cp -rf .config/hypr ~/.config/
+cp -rf .config/waybar ~/.config/
+cp -rf .config/kitty ~/.config/
+cp -rf .config/wofi ~/.config/ 2>/dev/null || true
+cp -rf .config/dunst ~/.config/ 2>/dev/null || true
+cp -rf .config/nemo ~/.config/ 2>/dev/null || true
+cp -rf .config/wal ~/.config/ 2>/dev/null || true
+success "Config files copied!"
+
+info "Copying .zshrc..."
 cp -rf .zshrc ~/
-[ -d ".themes" ] && cp -r .themes/. ~/.themes/
-[ -d "Pictures" ] && cp -r Pictures/. ~/Pictures/
-# Update system
-sudo pacman -Syu --noconfirm
+success ".zshrc copied!"
 
-# Install yay
-echo "Installing yay..."
+info "Copying themes..."
+[ -d ".themes" ] && cp -rf .themes/. ~/.themes/ && success "Themes copied!" || warning "No .themes folder found, skipping."
+
+info "Copying wallpapers..."
+[ -d "Pictures" ] && cp -rf Pictures/. ~/Pictures/ && success "Wallpapers copied!" || warning "No Pictures folder found, skipping."
+
+# ── Update system ─────────────────────────────────────────────
+section "Updating System"
+sudo pacman -Syu --noconfirm
+success "System updated!"
+
+# ── Install yay ───────────────────────────────────────────────
+section "Installing Yay (AUR Helper)"
 sudo pacman -S --needed --noconfirm git base-devel
 git clone https://aur.archlinux.org/yay.git
 cd yay && makepkg -si --noconfirm && cd .. && rm -rf yay
+success "Yay installed!"
 
-# Core
-echo "Installing core packages..."
+# ── Pacman packages ───────────────────────────────────────────
+section "Installing Packages"
+
+info "Core..."
 sudo pacman -S --needed --noconfirm base base-devel git sudo wget flatpak
+success "Core done!"
 
-# Boot
-echo "Installing boot packages..."
+info "Boot..."
 sudo pacman -S --needed --noconfirm grub efibootmgr
+success "Boot done!"
 
-# Drivers
-echo "Installing drivers..."
-sudo pacman -S --needed --noconfirm intel-ucode intel-media-driver libva-intel-driver vulkan-intel
+info "Drivers..."
+sudo pacman -S --needed --noconfirm intel-ucode intel-media-driver libva-intel-driver vulkan-intel vulkan-radeon vulkan-nouveau xf86-video-amdgpu xf86-video-ati xf86-video-nouveau
+success "Drivers done!"
 
-# Hyprland
-echo "Installing Hyprland..."
+info "Hyprland & Wayland..."
 sudo pacman -S --needed --noconfirm hyprland xdg-desktop-portal-hyprland xdg-utils qt6-wayland uwsm hyprpolkitagent
+success "Hyprland done!"
 
-# Display manager
-echo "Installing sddm..."
+info "Display manager..."
 sudo pacman -S --needed --noconfirm sddm
+success "SDDM done!"
 
-# Audio
-echo "Installing audio..."
+info "Audio..."
 sudo pacman -S --needed --noconfirm pipewire wireplumber pipewire-pulse pavucontrol
+success "Audio done!"
 
-# Networking
-echo "Installing networking..."
+info "Networking..."
 sudo pacman -S --needed --noconfirm iwd nm-connection-editor
+success "Networking done!"
 
-# Bar and launcher
-echo "Installing bar and launcher..."
+info "Bar & launcher..."
 sudo pacman -S --needed --noconfirm waybar wofi dunst
+success "Bar & launcher done!"
 
-# Terminal
-echo "Installing terminal..."
+info "Terminal..."
 sudo pacman -S --needed --noconfirm kitty
+success "Terminal done!"
 
-# Fonts
-echo "Installing fonts..."
+info "Fonts..."
 sudo pacman -S --needed --noconfirm noto-fonts ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols ttf-nerd-fonts-symbols-common
+success "Fonts done!"
 
-# Wallpaper
-echo "Installing swww..."
+info "Wallpaper..."
 sudo pacman -S --needed --noconfirm swww
+success "Wallpaper done!"
 
-# Pywal
-echo "Installing pywal..."
+info "Pywal..."
 sudo pacman -S --needed --noconfirm python-pywal python-pywalfox
+success "Pywal done!"
 
-# Shell
-echo "Installing zsh..."
+info "Shell..."
 sudo pacman -S --needed --noconfirm zsh
+success "Shell done!"
 
-# Theming
-echo "Installing theming tools..."
+info "Theming..."
 sudo pacman -S --needed --noconfirm nwg-look qt5ct
+success "Theming done!"
 
-# File manager
+info "File manager..."
 sudo pacman -S --needed --noconfirm nemo
+success "File manager done!"
 
-# System tools
+info "System tools..."
 sudo pacman -S --needed --noconfirm brightnessctl playerctl btop fastfetch
+success "System tools done!"
 
-# Browser
+info "Browser..."
 sudo pacman -S --needed --noconfirm firefox
+success "Browser done!"
 
-# Oomox dependencies
-sudo pacman -S --needed --noconfirm sassc gtk-engine-murrine gtk-engines flatpak
+info "Oomox dependencies..."
+sudo pacman -S --needed --noconfirm sassc gtk-engine-murrine gtk-engines
+success "Oomox dependencies done!"
 
-# AUR packages
-echo "Installing AUR packages..."
-yay -S --needed --noconfirm grimblast-git hyprlauncher wlogout sddm-astronaut-theme com.github.themix_project.Oomox python-pywal
+# ── AUR packages ──────────────────────────────────────────────
+section "Installing AUR Packages"
+yay -S --needed --noconfirm grimblast-git hyprlauncher wlogout sddm-astronaut-theme python-pywal
 flatpak install -y flathub com.github.themix_project.Oomox
+success "AUR packages done!"
 
+# ── Default pywal colors ──────────────────────────────────────
+section "Setting Up Default Colors"
+mkdir -p ~/.cache/wal
 
-# Set zsh as default shell
-echo "Setting zsh as default shell..."
+cat > ~/.cache/wal/colors-hyprland.conf << 'EOF'
+$foreground = rgb(ffffff)
+$background = rgb(000000)
+$color0 = rgb(000000)
+$color1 = rgb(444444)
+$color2 = rgb(888888)
+$color3 = rgb(aaaaaa)
+$color4 = rgb(bbbbbb)
+$color5 = rgb(cccccc)
+$color6 = rgb(dddddd)
+$color7 = rgb(eeeeee)
+$color8 = rgb(111111)
+$color9 = rgb(555555)
+$color10 = rgb(999999)
+$color11 = rgb(aaaaaa)
+$color12 = rgb(bbbbbb)
+$color13 = rgb(cccccc)
+$color14 = rgb(dddddd)
+$color15 = rgb(ffffff)
+EOF
+
+cat > ~/.cache/wal/colors-waybar.css << 'EOF'
+@define-color foreground #ffffff;
+@define-color background #000000;
+@define-color color0 #000000;
+@define-color color1 #444444;
+@define-color color2 #888888;
+@define-color color3 #aaaaaa;
+@define-color color4 #bbbbbb;
+@define-color color5 #cccccc;
+@define-color color6 #dddddd;
+@define-color color7 #eeeeee;
+@define-color color8 #111111;
+@define-color color9 #555555;
+@define-color color10 #999999;
+@define-color color11 #aaaaaa;
+@define-color color12 #bbbbbb;
+@define-color color13 #cccccc;
+@define-color color14 #dddddd;
+@define-color color15 #ffffff;
+EOF
+success "Default colors created!"
+
+# ── Shell ─────────────────────────────────────────────────────
+section "Setting Up Shell"
+info "Setting zsh as default shell..."
 chsh -s /usr/bin/zsh
+success "Zsh set as default shell!"
 
-# Enable sddm
-echo "Enabling sddm..."
+# ── Groups ────────────────────────────────────────────────────
+section "Setting Up User Groups"
+sudo usermod -aG input,storage $USER
+success "User groups set!"
+
+# ── Enable services ───────────────────────────────────────────
+section "Enabling Services"
+info "Enabling SDDM..."
 sudo systemctl enable sddm
+success "SDDM enabled!"
 
-# Set sddm theme
-echo "Setting sddm theme..."
+# ── SDDM theme ────────────────────────────────────────────────
+info "Setting SDDM theme..."
 sudo mkdir -p /etc/sddm.conf.d/
 sudo bash -c 'cat > /etc/sddm.conf.d/theme.conf << EOF
 [Theme]
 Current=sddm-astronaut-theme
 EOF'
-
-# Create post-install script
+success "SDDM theme set!"
+# Set sddm-astronaut theme variant
+sudo sed -i 's/ConfigFile=Themes\/astronaut.conf/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
+success "SDDM theme variant set to hyprland_kath!"
+# ── Post install script ───────────────────────────────────────
+section "Creating Post-Install Script"
 cat > ~/post-install.sh << 'EOF'
 #!/bin/bash
-echo "Running post install setup..."
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+NC='\033[0m'
+
+info()    { echo -e "${CYAN}${BOLD}[INFO]${NC} $1"; }
+success() { echo -e "${GREEN}${BOLD}[OK]${NC} $1"; }
+error()   { echo -e "${RED}${BOLD}[ERR]${NC} $1"; }
+
+echo -e "${CYAN}${BOLD}Running post-install setup...${NC}\n"
+
+info "Starting swww daemon..."
 swww-daemon &
 sleep 2
 
+info "Setting wallpaper and generating pywal colors (light mode)..."
 swww img ~/Pictures/Wallpapers/wallpaper_animated.gif
-wal -i ~/Pictures/Wallpapers/wallpaper_animated.gif -n
+wal -l -i ~/Pictures/Wallpapers/wallpaper_animated.gif -n
+success "Pywal colors generated!"
 
+info "Building oomox GTK theme from pywal colors..."
 source ~/.cache/wal/colors.sh
 
 OOMOX_THEME_SCRIPT="/var/lib/flatpak/app/com.github.themix_project.Oomox/x86_64/stable/current/files/opt/oomox/plugins/theme_oomox/change_color.sh"
@@ -145,11 +278,21 @@ COLORS
 
 "$OOMOX_THEME_SCRIPT" -o "pywal" "$OOMOX_COLORS"
 gsettings set org.gnome.desktop.interface gtk-theme "oomox-pywal"
+gsettings set org.gnome.desktop.interface color-scheme "prefer-light"
 rm "$OOMOX_COLORS"
+success "GTK light theme applied!"
 
-echo "Post install done! You can delete ~/post-install.sh"
+success "Post-install done! You can delete ~/post-install.sh"
 EOF
 
 chmod +x ~/post-install.sh
-~/post-install.sh
-echo "Done! Please reboot, then run ~/post-install.sh after logging into Hyprland."
+success "Post-install script created at ~/post-install.sh"
+
+# ── Done ──────────────────────────────────────────────────────
+echo -e "\n${GREEN}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${GREEN}${BOLD}  Installation complete!${NC}"
+echo -e "${GREEN}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "\n  ${BOLD}Next steps:${NC}"
+echo -e "  ${CYAN}1.${NC} Reboot your system"
+echo -e "  ${CYAN}2.${NC} Log into Hyprland"
+echo -e "  ${CYAN}3.${NC} Run ${BOLD}~/post-install.sh${NC}\n"
