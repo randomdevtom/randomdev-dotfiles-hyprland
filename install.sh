@@ -86,7 +86,7 @@ sudo pacman -S --needed --noconfirm sassc gtk-engine-murrine gtk-engines flatpak
 
 # AUR packages
 echo "Installing AUR packages..."
-yay -S --needed --noconfirm grimblast-git hyprlauncher wlogout sddm-astronaut-theme com.github.themix_project.Oomox
+yay -S --needed --noconfirm grimblast-git hyprlauncher wlogout sddm-astronaut-theme com.github.themix_project.Oomox python-pywal
 
 # Copy config files
 echo "Copying configuration files..."
