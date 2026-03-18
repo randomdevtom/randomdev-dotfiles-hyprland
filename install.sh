@@ -290,7 +290,9 @@ cat >> ~/.config/hypr/env.conf << 'ENVEOF'
 env = GTK_THEME,oomox-colors-oomox-animated
 env = GTK2_RC_FILES,/home/tom/.themes/oomox-colors-oomox-animated/gtk-2.0/gtkrc
 ENVEOF
-
+sudo cp -rf ~/.themes/oomox-colors-oomox-animated /usr/share/themes/
+sudo cp -rf ~/.icons/oomox-colors-oomox /usr/share/icons/
+nwg-look -a
 success "GTK theme applied!"
 success "Post-install done! You can delete ~/post-install.sh"
 POSTEOF
