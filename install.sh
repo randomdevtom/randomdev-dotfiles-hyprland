@@ -23,7 +23,7 @@ cd yay && makepkg -si --noconfirm && cd .. && rm -rf yay
 
 # Core
 echo "Installing core packages..."
-sudo pacman -S --needed --noconfirm base base-devel git sudo wget
+sudo pacman -S --needed --noconfirm base base-devel git sudo wget flatpak
 
 # Boot
 echo "Installing boot packages..."
@@ -92,7 +92,7 @@ sudo pacman -S --needed --noconfirm sassc gtk-engine-murrine gtk-engines flatpak
 # AUR packages
 echo "Installing AUR packages..."
 yay -S --needed --noconfirm grimblast-git hyprlauncher wlogout sddm-astronaut-theme com.github.themix_project.Oomox python-pywal
-
+flatpak install -y flathub com.github.themix_project.Oomox
 
 
 # Set zsh as default shell
@@ -151,5 +151,5 @@ echo "Post install done! You can delete ~/post-install.sh"
 EOF
 
 chmod +x ~/post-install.sh
-
+~/post-install.sh
 echo "Done! Please reboot, then run ~/post-install.sh after logging into Hyprland."
