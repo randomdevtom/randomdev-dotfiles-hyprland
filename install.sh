@@ -265,6 +265,7 @@ sleep 2
 info "Setting wallpaper and generating pywal colors..."
 swww img ~/Pictures/Wallpapers/wallpaper_animated.gif
 wal -i ~/Pictures/Wallpapers/wallpaper_animated.gif -n
+sed -i 's/source=~\/.cache\/wal\/colors-hyprland.conf/source = ~\/.cache\/wal\/colors-hyprland.conf/' ~/.config/hypr/hyprland.conf
 success "Pywal colors generated!"
 
 info "Applying GTK theme..."
