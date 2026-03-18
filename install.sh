@@ -8,7 +8,7 @@ echo "Starting installation..."
 echo "I am a lazy guy :P"
 # Copy config files
 echo "Copying configuration files..."
-cp -r .config/. ~/
+cp -r .config/ ~/
 cp -r -.zshrc ~/
 [ -d ".themes" ] && cp -r .themes/. ~/.themes/
 [ -d "Pictures" ] && cp -r Pictures/. ~/Pictures/
