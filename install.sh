@@ -161,7 +161,7 @@ success "Oomox dependencies done!"
 # ── AUR packages ──────────────────────────────────────────────
 section "Installing AUR Packages"
 yay -S --needed --noconfirm grimblast-git hyprlauncher wlogout sddm-astronaut-theme python-pywal
-flatpak install -y flathub com.github.themix_project.Oomox
+flatpak install flathub com.github.themix_project.Oomox
 success "AUR packages done!"
 
 # ── Default pywal colors ──────────────────────────────────────
