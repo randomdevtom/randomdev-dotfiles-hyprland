@@ -251,11 +251,11 @@ section "Setting wallpaper"
 sudo chmod +x wallpaper.sh
 swww-daemon &
 ./wallpaper.sh ~/Pictures/Wallpapers/wallpaper_animated.gif 
-waybar -l off &
 # ── Done ──────────────────────────────────────────────────────
 echo -e "\n${GREEN}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${GREEN}${BOLD}  Installation complete!${NC}"
 echo -e "${GREEN}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "\n  ${BOLD}Next steps:${NC}"
-echo -e "  ${CYAN}1.${NC} Reboot"
+echo -e "  ${CYAN}1.${NC} Reboot."
+echo -e "  ${CYAN}3.${NC} Use the wallpaper.sh to change the wallpaper and theme."
 echo -e "  ${CYAN}2.${NC} Enjoy :)"
