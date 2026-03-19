@@ -249,6 +249,7 @@ success "SDDM theme applied!"
 # ── Post install script ───────────────────────────────────────
 section "Setting wallpaper"
 sudo chmod +x wallpaper.sh
+swww-daemon &
 ./wallpaper.sh ~/Pictures/Wallpapers/wallpaper_animated.gif 
 waybar -l off &
 # ── Done ──────────────────────────────────────────────────────
