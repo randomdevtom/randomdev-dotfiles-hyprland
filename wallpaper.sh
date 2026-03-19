@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Usage: ./wallpaper.sh /path/to/wallpaper.jpg
-
+swww-daemon &
 WALLPAPER=$1
 GTK_THEME="oomox-pywal"
 
@@ -99,7 +99,7 @@ EOF
 nwg-look -a
 
 # Restart waybar
-killall waybar && waybar &disown
+pkill waybar && waybar &disown
 
 # Reload hyprland
 hyprctl reload
