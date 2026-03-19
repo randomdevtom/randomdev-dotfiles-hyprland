@@ -5,6 +5,7 @@ window#waybar {
     background: alpha(@background, 0.25);
     color: @foreground;
     border-radius: 20px;
+    font-size: 13px;
     margin: 8px 12px;
     border: 1px solid alpha(@foreground, 0.06);
 }
