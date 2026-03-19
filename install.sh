@@ -32,6 +32,8 @@ echo -e "${YELLOW}${BOLD}  I am a lazy guy :P${NC}\n"
 sleep 1
 echo -e "${RED}${BOLD}  WARNING: This script will overwrite existing config files!${NC}"
 echo -e "${YELLOW}  Make sure to backup any configs you want to keep.${NC}\n"
+echo -e "${YELLOW}  Please run this in hyprland, or run this script in whathever env you are in and then rerun this script in hyprland.${NC}\n"
+echo -e "${RED}${BOLD} WALLPAPER WONT BE SET UNLESS YOU ARE RUNNING THIS IN HYPRLAND!${NC}"
 read -p "  Press Enter to continue or Ctrl+C to cancel..."
 # Ask for password once and keep sudo alive
 info "Requesting sudo access..."
@@ -248,7 +250,7 @@ success "SDDM theme applied!"
 section "Setting wallpaper"
 sudo chmod +x wallpaper.sh
 ./wallpaper.sh ~/Pictures/Wallpapers/wallpaper_animated.gif 
-waybar
+waybar &
 # ── Done ──────────────────────────────────────────────────────
 echo -e "\n${GREEN}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${GREEN}${BOLD}  Installation complete!${NC}"
