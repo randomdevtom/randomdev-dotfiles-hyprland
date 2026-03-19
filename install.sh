@@ -246,7 +246,7 @@ sudo sed -i 's/ConfigFile=Themes\/.*/ConfigFile=Themes\/hyprland_kath.conf/' /us
 success "SDDM theme applied!"
 # ── Post install script ───────────────────────────────────────
 section "Setting wallpaper"
-
+sudo chmod +x wallpaper.sh
 ./wallpaper.sh ~/Pictures/Wallpapers/wallpaper_animated.gif 
 # ── Done ──────────────────────────────────────────────────────
 echo -e "\n${GREEN}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
