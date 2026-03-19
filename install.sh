@@ -259,3 +259,4 @@ echo -e "\n  ${BOLD}Next steps:${NC}"
 echo -e "  ${CYAN}1.${NC} Reboot."
 echo -e "  ${CYAN}3.${NC} Use the wallpaper.sh to change the wallpaper and theme."
 echo -e "  ${CYAN}2.${NC} Enjoy :)"
+waybar &
