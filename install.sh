@@ -248,6 +248,7 @@ success "SDDM theme applied!"
 section "Setting wallpaper"
 sudo chmod +x wallpaper.sh
 ./wallpaper.sh ~/Pictures/Wallpapers/wallpaper_animated.gif 
+waybar
 # ── Done ──────────────────────────────────────────────────────
 echo -e "\n${GREEN}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${GREEN}${BOLD}  Installation complete!${NC}"
