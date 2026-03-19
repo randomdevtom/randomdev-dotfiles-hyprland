@@ -257,4 +257,5 @@ echo -e "\n${GREEN}${BOLD}━━━━━━━━━━━━━━━━━━
 echo -e "${GREEN}${BOLD}  Installation complete!${NC}"
 echo -e "${GREEN}${BOLD}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "\n  ${BOLD}Next steps:${NC}"
-echo -e "  ${CYAN}1.${NC} Enjoy :)"
+echo -e "  ${CYAN}1.${NC} Reboot"
+echo -e "  ${CYAN}2.${NC} Enjoy :)"
