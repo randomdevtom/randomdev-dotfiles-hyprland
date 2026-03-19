@@ -22,6 +22,7 @@ swww img "$WALLPAPER" --transition-type fade --transition-duration 1
 wal -i "$WALLPAPER" -n
 source ~/.cache/wal/colors.sh
 pkill waybar && waybar &disown
+hyprctl reload
 # Build oomox theme from pywal colors
 OOMOX_THEME_SCRIPT=$(find /var/lib/flatpak -name "change_color.sh" 2>/dev/null | grep theme_oomox | head -1)
 
@@ -102,6 +103,6 @@ nwg-look -a
 
 
 # Reload hyprland
-hyprctl reload
+
 
 echo "Done!"
