@@ -56,7 +56,7 @@ git clone https://github.com/randomdevtom/randomdev-dotfiles-hyprland.git
 cd randomdev-dotfiles-hyprland
 bash install.sh
 ```
-
+( Run it in hyprland for the wallpaper to be set )
 ---
 
 ## ⌨️ Keybindings
